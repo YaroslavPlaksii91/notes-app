@@ -1,5 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { openDB } from 'idb';
+import { Header } from './Header';
+
+const notesEx = [
+  {
+    id: 1,
+    title: 'Note 1',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    date: '2023-05-08',
+  },
+  {
+    id: 2,
+    title: 'Note 2',
+    text: 'Nulla facilisi. In hac habitasse platea dictumst.',
+    date: '2023-05-09',
+  },
+  {
+    id: 3,
+    title: 'Note 3',
+    text: 'Suspendisse malesuada aliquam libero, eget lobortis leo volutpat id.',
+    date: '2023-05-10',
+  },
+];
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -40,42 +62,43 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h2>Notes</h2>
-      {notes.map(note => (
-        <div key={note.id}>
-          <h3>{note.title}</h3>
-          <textarea
-            value={note.content}
-            onChange={e => updateNoteContent(note.id, e.target.value)}
-          ></textarea>
-        </div>
-      ))}
-      <h3>Add Note</h3>
-      <form
-        onSubmit={async event => {
-          event.preventDefault();
-          await addNote();
-          setTitle('');
-          setContent('');
-        }}
-      >
-        <label htmlFor="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-        />
-        <label htmlFor="content">Content</label>
-        <textarea
-          id="content"
-          value={content}
-          onChange={e => setContent(e.target.value)}
-        ></textarea>
-        <button type="submit">Add Note</button>
-      </form>
-    </div>
+    // <div>
+    //   <h2>Notes</h2>
+    //   {notes.map(note => (
+    //     <div key={note.id}>
+    //       <h3>{note.title}</h3>
+    //       <textarea
+    //         value={note.content}
+    //         onChange={e => updateNoteContent(note.id, e.target.value)}
+    //       ></textarea>
+    //     </div>
+    //   ))}
+    //   <h3>Add Note</h3>
+    //   <form
+    //     onSubmit={async event => {
+    //       event.preventDefault();
+    //       await addNote();
+    //       setTitle('');
+    //       setContent('');
+    //     }}
+    //   >
+    //     <label htmlFor="title">Title</label>
+    //     <input
+    //       type="text"
+    //       id="title"
+    //       value={title}
+    //       onChange={e => setTitle(e.target.value)}
+    //     />
+    //     <label htmlFor="content">Content</label>
+    //     <textarea
+    //       id="content"
+    //       value={content}
+    //       onChange={e => setContent(e.target.value)}
+    //     ></textarea>
+    //     <button type="submit">Add Note</button>
+    //   </form>
+    // </div>
+    <Header />
   );
 };
 
