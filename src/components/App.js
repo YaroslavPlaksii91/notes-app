@@ -1,35 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { openDB } from 'idb';
+import { NotesContext } from 'services/context';
 import { Header } from './Header';
 import { Main } from './Main';
 import { SideBar } from './SideBar';
 import { Workspace } from './Workspace';
 
-const notesEx = [
-  {
-    id: 1,
-    title: 'Note 1',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    date: '2023-05-08',
-  },
-  {
-    id: 2,
-    title: 'Note 2',
-    text: 'Nulla facilisi. In hac habitasse platea dictumst.',
-    date: '2023-05-09',
-  },
-  {
-    id: 3,
-    title: 'Note 3',
-    text: 'Suspendisse malesuada aliquam libero, eget lobortis leo volutpat id.',
-    date: '2023-05-10',
-  },
-];
-
 const App = () => {
   const [notes, setNotes] = useState([]);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [activeNote, setActiveNote] = useState(null);
 
   useEffect(() => {
     async function getNotes() {
@@ -50,64 +29,60 @@ const App = () => {
     const db = await openDB('notes', 1);
     const tx = db.transaction('notes', 'readwrite');
     const store = tx.objectStore('notes');
-    const note = { title, content };
-    const id = await store.add(note);
-    setNotes([...notes, { id, ...note }]);
+    const body = { title: '', content: '', date: new Date().toLocaleString() };
+    const id = await store.add(body);
+    const newNote = { id, ...body };
+    setNotes([...notes, newNote]);
+    setActiveNote(newNote);
   }
 
-  async function updateNoteContent(id, content) {
+  async function updateNote(id, body) {
     const db = await openDB('notes', 1);
     const tx = db.transaction('notes', 'readwrite');
     const store = tx.objectStore('notes');
+
     const note = await store.get(id);
-    note.content = content;
+
+    if (body.title) {
+      note.title = body.title;
+    } else {
+      note.content = body.content;
+    }
+
     await store.put(note);
+
+    const updatedNotes = await store.getAll();
+    setNotes(updatedNotes);
+  }
+
+  async function deleteNote(id) {
+    const db = await openDB('notes', 1);
+    const tx = db.transaction('notes', 'readwrite');
+    const store = tx.objectStore('notes');
+    await store.delete(id);
+
+    const updatedNotes = await store.getAll();
+    setNotes(updatedNotes);
+    setActiveNote(null);
   }
 
   return (
-    // <div>
-    //   <h2>Notes</h2>
-    //   {notes.map(note => (
-    //     <div key={note.id}>
-    //       <h3>{note.title}</h3>
-    //       <textarea
-    //         value={note.content}
-    //         onChange={e => updateNoteContent(note.id, e.target.value)}
-    //       ></textarea>
-    //     </div>
-    //   ))}
-    //   <h3>Add Note</h3>
-    //   <form
-    //     onSubmit={async event => {
-    //       event.preventDefault();
-    //       await addNote();
-    //       setTitle('');
-    //       setContent('');
-    //     }}
-    //   >
-    //     <label htmlFor="title">Title</label>
-    //     <input
-    //       type="text"
-    //       id="title"
-    //       value={title}
-    //       onChange={e => setTitle(e.target.value)}
-    //     />
-    //     <label htmlFor="content">Content</label>
-    //     <textarea
-    //       id="content"
-    //       value={content}
-    //       onChange={e => setContent(e.target.value)}
-    //     ></textarea>
-    //     <button type="submit">Add Note</button>
-    //   </form>
-    // </div>
-    <>
+    <NotesContext.Provider
+      value={{
+        notes,
+        addNote,
+        updateNote,
+        deleteNote,
+        setActiveNote,
+        activeNote,
+      }}
+    >
       <Header />
       <Main>
         <SideBar />
-        <Workspace />
+        {activeNote && <Workspace note={activeNote} />}
       </Main>
-    </>
+    </NotesContext.Provider>
   );
 };
 
