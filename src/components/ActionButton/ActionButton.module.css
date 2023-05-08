@@ -11,6 +11,10 @@
   transition: color 250ms ease;
 }
 
+.button[disabled] {
+  pointer-events: none;
+}
+
 .button:hover,
 .button:focus {
   color: white;

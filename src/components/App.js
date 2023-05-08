@@ -70,6 +70,7 @@ const App = () => {
     <NotesContext.Provider
       value={{
         notes,
+        setNotes,
         addNote,
         updateNote,
         deleteNote,
