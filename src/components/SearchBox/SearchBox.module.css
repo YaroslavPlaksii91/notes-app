@@ -1,0 +1,12 @@
+.input {
+  height: 25px;
+  padding: 5px;
+  border-radius: 4px;
+  outline: none;
+  border-color: transparent;
+  transition: border-color 250ms ease;
+}
+
+.input:focus {
+  border-color: blue;
+}

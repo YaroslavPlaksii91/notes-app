@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { openDB } from 'idb';
 import { Header } from './Header';
+import { Main } from './Main';
+import { SideBar } from './SideBar';
+import { Workspace } from './Workspace';
 
 const notesEx = [
   {
@@ -98,7 +101,13 @@ const App = () => {
     //     <button type="submit">Add Note</button>
     //   </form>
     // </div>
-    <Header />
+    <>
+      <Header />
+      <Main>
+        <SideBar />
+        <Workspace />
+      </Main>
+    </>
   );
 };
 

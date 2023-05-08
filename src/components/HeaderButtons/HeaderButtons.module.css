@@ -1,0 +1,7 @@
+.buttonsWrapper {
+  display: flex;
+}
+
+.buttonsWrapper:not(:last-child) {
+  gap: 10px;
+}

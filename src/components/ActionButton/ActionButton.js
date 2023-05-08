@@ -1,6 +1,6 @@
 import s from './ActionButton.module.css';
 
-export const ActionButton = ({ icon, action, label }) => {
+export const ActionButton = ({ children, action, label }) => {
   return (
     <button
       type="button"
@@ -8,7 +8,7 @@ export const ActionButton = ({ icon, action, label }) => {
       onClick={action}
       className={s.button}
     >
-      {icon}
+      {children}
     </button>
   );
 };
