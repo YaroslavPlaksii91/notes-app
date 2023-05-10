@@ -9,6 +9,7 @@ import { Workspace } from './Workspace';
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     async function getNotes() {
@@ -66,6 +67,16 @@ const App = () => {
     setActiveNote(null);
   }
 
+  const getVisibleNotes = () => {
+    const normalizedQuery = query.toLowerCase();
+
+    return notes.filter(
+      ({ title, content }) =>
+        title.toLowerCase().includes(normalizedQuery) ||
+        content.toLowerCase().includes(normalizedQuery),
+    );
+  };
+
   return (
     <NotesContext.Provider
       value={{
@@ -76,6 +87,8 @@ const App = () => {
         deleteNote,
         setActiveNote,
         activeNote,
+        setQuery,
+        getVisibleNotes,
       }}
     >
       <Header />

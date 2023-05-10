@@ -1,13 +1,15 @@
 import { useState } from 'react';
-// import { useNotes } from 'services/context';
+import { useNotes } from 'services/context';
 import s from './SearchBox.module.css';
 
 export const SearchBox = () => {
   const [value, setValue] = useState('');
-  // const { notes, setNotes } = useNotes();
+  const { setQuery } = useNotes();
 
   const handleChange = e => {
     setValue(e.target.value);
+
+    setQuery(e.target.value);
   };
 
   return (
