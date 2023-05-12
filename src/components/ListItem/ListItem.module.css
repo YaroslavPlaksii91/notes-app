@@ -1,11 +1,37 @@
-.title {
-  margin-bottom: 5px;
+.note {
+  max-width: 80px;
+  padding: 5px;
+  background-color: #fff;
+  transition: background-color 250ms ease;
 }
 
+@media (min-width: 768px) {
+  .note {
+    max-width: 200px;
+  }
+}
+
+.note:hover,
+.note:focus,
+.active {
+  background-color: lightsalmon;
+  outline: none;
+  border-radius: 6px;
+}
+
+.active {
+  composes: note;
+}
+
+.title,
 .content {
   margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .date {
   font-style: italic;
+  font-size: 14px;
 }

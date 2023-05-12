@@ -6,7 +6,7 @@ import { ActionButton } from 'components/ActionButton';
 import s from './HeaderButtons.module.css';
 
 export const HeaderButtons = () => {
-  const { addNote, deleteNote, activeNote } = useNotes();
+  const { addNote, deleteNote, activeNote, setShouldFocusInput } = useNotes();
 
   return (
     <div className={s.buttonsWrapper}>
@@ -20,7 +20,11 @@ export const HeaderButtons = () => {
       >
         <AiOutlineDelete size={'20px'} />
       </ActionButton>
-      <ActionButton label={'Edit note'} disabled>
+      <ActionButton
+        label={'Edit note'}
+        disabled
+        action={() => setShouldFocusInput(true)}
+      >
         <MdOutlineEditNote size={'25px'} />
       </ActionButton>
     </div>

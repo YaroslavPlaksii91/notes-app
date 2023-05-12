@@ -10,6 +10,7 @@ const App = () => {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
   const [query, setQuery] = useState('');
+  const [shouldFocusInput, setShouldFocusInput] = useState(false);
 
   useEffect(() => {
     async function getNotes() {
@@ -44,7 +45,7 @@ const App = () => {
 
     const note = await store.get(id);
 
-    if (body.title) {
+    if (body.title !== undefined) {
       note.title = body.title;
     } else {
       note.content = body.content;
@@ -53,6 +54,7 @@ const App = () => {
     await store.put(note);
 
     const updatedNotes = await store.getAll();
+
     setNotes(updatedNotes);
   }
 
@@ -89,6 +91,8 @@ const App = () => {
         activeNote,
         setQuery,
         getVisibleNotes,
+        shouldFocusInput,
+        setShouldFocusInput,
       }}
     >
       <Header />

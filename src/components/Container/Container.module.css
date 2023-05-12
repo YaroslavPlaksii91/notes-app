@@ -14,8 +14,14 @@
 
 .container.headerContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   background-color: lightslategray;
+}
+
+@media (min-width: 768px) {
+  .container.headerContainer {
+    justify-content: space-around;
+  }
 }
 
 .mainContainer {

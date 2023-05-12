@@ -3,5 +3,11 @@
 }
 
 .buttonsWrapper:not(:last-child) {
-  gap: 10px;
+  gap: 5px;
+}
+
+@media (min-width: 768px) {
+  .buttonsWrapper:not(:last-child) {
+    gap: 10px;
+  }
 }
