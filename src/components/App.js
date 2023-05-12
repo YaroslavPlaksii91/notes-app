@@ -5,12 +5,14 @@ import { Header } from './Header';
 import { Main } from './Main';
 import { SideBar } from './SideBar';
 import { Workspace } from './Workspace';
+import { Modal } from './Modal';
 
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
   const [query, setQuery] = useState('');
   const [shouldFocusInput, setShouldFocusInput] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function getNotes() {
@@ -93,12 +95,14 @@ const App = () => {
         getVisibleNotes,
         shouldFocusInput,
         setShouldFocusInput,
+        setShowModal,
       }}
     >
       <Header />
       <Main>
         <SideBar />
         {activeNote && <Workspace note={activeNote} />}
+        {showModal && <Modal />}
       </Main>
     </NotesContext.Provider>
   );

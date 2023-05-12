@@ -6,7 +6,7 @@ import { ActionButton } from 'components/ActionButton';
 import s from './HeaderButtons.module.css';
 
 export const HeaderButtons = () => {
-  const { addNote, deleteNote, activeNote, setShouldFocusInput } = useNotes();
+  const { addNote, setShowModal, setShouldFocusInput } = useNotes();
 
   return (
     <div className={s.buttonsWrapper}>
@@ -15,7 +15,7 @@ export const HeaderButtons = () => {
       </ActionButton>
       <ActionButton
         label={'Delete note'}
-        action={() => deleteNote(activeNote.id)}
+        action={() => setShowModal(true)}
         disabled
       >
         <AiOutlineDelete size={'20px'} />
